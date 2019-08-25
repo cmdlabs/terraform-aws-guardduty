@@ -51,6 +51,12 @@ variable "ipset_name" {
   description = "The friendly name to identify the IPSet"
 }
 
+variable "ipset_iplist" {
+  type        = list
+  description = "TODO"
+  default     = []
+}
+
 variable "threatintelset_activate" {
   type        = bool
   description = "Specifies whether GuardDuty is to start using the uploaded ThreatIntelSet"
@@ -76,4 +82,10 @@ variable "threatintelset_key" {
 variable "threatintelset_name" {
   type        = string
   description = "The friendly name to identify the ThreatIntelSet"
+}
+
+variable "threatintelset_iplist" {
+  type        = list
+  description = "TODO"
+  default     = []
 }

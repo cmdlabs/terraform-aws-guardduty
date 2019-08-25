@@ -42,12 +42,13 @@ The below outlines the current parameters and defaults.
 | ipset_bucket
 | ipset_key
 | ipset_name
+| ipset_iplist
 | threatintelset_activate
 | threatintelset_format
 | threatintelset_bucket
 | threatintelset_key
 | threatintelset_name
-| guardduty.threatintelset.iplist | TODO
+| threatintelset_iplist
 
 ### Outputs
 
