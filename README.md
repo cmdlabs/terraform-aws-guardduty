@@ -1,6 +1,6 @@
-![CMD Solutions|medium](http://cmdsolutions.com.au/img/logo-cmd-solutions.svg)
+# terraform-aws-guardduty
 
-# Overview
+## Overview
 
 Amazon GuardDuty is a continuous security monitoring service that analyzes and processes the following data sources: VPC Flow Logs, AWS CloudTrail event logs, and DNS logs. It uses threat intelligence feeds, such as lists of malicious IPs and domains, and machine learning to identify unexpected and potentially unauthorized and malicious activity within your AWS environment.
 
@@ -50,9 +50,8 @@ The below outlines the current parameters and defaults.
 | guardduty.threatintelset.iplist | TODO
 
 ### Outputs
-The below outputs are exported as cloudformation exports.
 
-|Output|TF Export|
+|Name|Description|
 |------------|---------------------|
 | detector_id | The ID of the GuardDuty ThreatIntelSet and the detector ID |
 
