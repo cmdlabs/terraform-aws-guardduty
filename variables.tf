@@ -43,7 +43,6 @@ variable "ipset_bucket" {
 variable "ipset_key" {
   type        = string
   description = "The filename which gets created in S3 and stores whitelisted IP addresses"
-  default     = "TXT"
 }
 
 variable "ipset_name" {
