@@ -8,7 +8,7 @@ resource "aws_s3_bucket_object" "ipset" {
   content = templatefile("${path.module}/templates/ipset.txt.tpl",
               {ipset_iplist = var.ipset_iplist})
   bucket  = var.ipset_bucket
-  key     = "MyIPSet"
+  key     = var.ipset_key
 }
 
 resource "aws_guardduty_ipset" "ipset" {
@@ -26,7 +26,7 @@ resource "aws_s3_bucket_object" "threatintelset" {
   content = templatefile("${path.module}/templates/threatintelset.txt.tpl",
               {threatintelset_iplist = var.threatintelset_iplist})
   bucket  = var.threatintelset_bucket
-  key     = "MyIPSet"
+  key     = var.threatintelset_key
 }
 
 resource "aws_guardduty_threatintelset" "threatintelset" {
