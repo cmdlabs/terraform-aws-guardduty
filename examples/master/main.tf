@@ -3,7 +3,7 @@ resource "aws_s3_bucket" "bucket" {
 }
 
 module "guardduty" {
-  source = "../"
+  source = "../../"
   is_guardduty_master = true
   has_ipset = true
   has_threatintelset = true
