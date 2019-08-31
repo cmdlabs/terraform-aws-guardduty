@@ -39,15 +39,9 @@ The below outlines the current parameters and defaults.
 | detector_enable
 | ipset_activate
 | ipset_format
-| ipset_bucket
-| ipset_key
-| ipset_name
 | ipset_iplist
 | threatintelset_activate
 | threatintelset_format
-| threatintelset_bucket
-| threatintelset_key
-| threatintelset_name
 | threatintelset_iplist
 
 ### Outputs

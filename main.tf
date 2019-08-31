@@ -1,5 +1,17 @@
+locals {
+  ipset_name = "IPSet"
+  ipset_key = "ipset.txt"
+  threatintelset_name = "ThreatIntelSet"
+  threatintelset_key = "threatintelset.txt"
+}
+
 resource "aws_guardduty_detector" "detector" {
   enable = var.detector_enable
+}
+
+resource "aws_s3_bucket" "bucket" {
+  count = var.is_guardduty_master && (var.has_ipset || var.has_threatintelset) ? 1 : 0
+  acl   = "private"
 }
 
 resource "aws_s3_bucket_object" "ipset" {
@@ -7,8 +19,8 @@ resource "aws_s3_bucket_object" "ipset" {
   acl     = "public-read" # TODO Check
   content = templatefile("${path.module}/templates/ipset.txt.tpl",
               {ipset_iplist = var.ipset_iplist})
-  bucket  = var.ipset_bucket
-  key     = var.ipset_key
+  bucket  = aws_s3_bucket.bucket[0].id
+  key     = local.ipset_key
 }
 
 resource "aws_guardduty_ipset" "ipset" {
@@ -16,8 +28,8 @@ resource "aws_guardduty_ipset" "ipset" {
   activate    = var.ipset_activate
   detector_id = aws_guardduty_detector.detector.id
   format      = var.ipset_format
-  location    = "https://s3.amazonaws.com/${var.ipset_bucket}/${var.ipset_key}"
-  name        = var.ipset_name
+  location    = "https://s3.amazonaws.com/${aws_s3_bucket.bucket[0].id}/${local.ipset_key}"
+  name        = local.ipset_name
 }
 
 resource "aws_s3_bucket_object" "threatintelset" {
@@ -25,8 +37,8 @@ resource "aws_s3_bucket_object" "threatintelset" {
   acl     = "public-read" # TODO Check
   content = templatefile("${path.module}/templates/threatintelset.txt.tpl",
               {threatintelset_iplist = var.threatintelset_iplist})
-  bucket  = var.threatintelset_bucket
-  key     = var.threatintelset_key
+  bucket  = aws_s3_bucket.bucket[0].id
+  key     = local.threatintelset_key
 }
 
 resource "aws_guardduty_threatintelset" "threatintelset" {
@@ -34,6 +46,6 @@ resource "aws_guardduty_threatintelset" "threatintelset" {
   activate    = var.threatintelset_activate
   detector_id = aws_guardduty_detector.detector.id
   format      = var.threatintelset_format
-  location    = "https://s3.amazonaws.com/${var.threatintelset_bucket}/${var.threatintelset_key}"
-  name        = var.threatintelset_name
+  location    = "https://s3.amazonaws.com/${aws_s3_bucket.bucket[0].id}/${local.threatintelset_key}"
+  name        = local.threatintelset_name
 }
