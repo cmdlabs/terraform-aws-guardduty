@@ -1,3 +1,4 @@
+<!-- vim: set ft=markdown: -->
 # terraform-aws-guardduty
 
 ## Overview
@@ -30,19 +31,21 @@ The below outlines the current parameters and defaults.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-------:|:--------:|
-| members | TODO
-| members.name | TODO
-| members.email | TODO
-| is_guardduty_master
-| has_ipset
-| has_threatintelset
-| detector_enable
-| ipset_activate
-| ipset_format
-| ipset_iplist
-| threatintelset_activate
-| threatintelset_format
-| threatintelset_iplist
+|is_guardduty_master|Whether the account is a master account|bool|false|No|
+|is_guardduty_member|Whether the account is a member account|bool|false|No|
+|detector_enable|Enable monitoring and feedback reporting|bool|true|No|
+|has_ipset|Whether to include IPSet|bool|false|No|
+|has_threatintelset|Whether to include ThreatIntelSet|bool|false|No|
+|ipset_activate|Specifies whether GuardDuty is to start using the uploaded IPSet|bool|true|No|
+|ipset_format|The format of the file that contains the IPSet|string|TXT|No|
+|ipset_iplist|TODO|list|[]|No|
+|threatintelset_activate|Specifies whether GuardDuty is to start using the uploaded ThreatIntelSet|bool|true|No|
+|threatintelset_format|The format of the file that contains the ThreatIntelSet|string|TXT|No|
+|threatintelset_iplist|TODO|list|[]|No|
+|master_account_id|Account ID for Guard Duty Master. Required if is_guardduty_member|string||Yes|
+|member_list||object||Yes|
+|member_list|The list of member accounts to be added. Each member list need to have values of account_id, member_email and invite boolean|object|[]|No|
+
 
 ### Outputs
 

@@ -4,6 +4,12 @@ variable "is_guardduty_master" {
   default     = false
 }
 
+variable "is_guardduty_member" {
+  type        = bool
+  description = "Whether the account is a member account"
+  default     = false
+}
+
 variable "detector_enable" {
   type        = bool
   description = "Enable monitoring and feedback reporting"
@@ -55,5 +61,21 @@ variable "threatintelset_format" {
 variable "threatintelset_iplist" {
   type        = list
   description = "TODO"
+  default     = []
+}
+
+variable "master_account_id" {
+  type        = string
+  description = "Account ID for Guard Duty Master. Required if is_guardduty_member"
+  default     = ""
+}
+
+variable "member_list" {
+  type = list(object({
+    account_id   = string
+    member_email = string
+    invite       = bool
+  }))
+  description = "The list of member accounts to be added. Each member list need to have values of account_id, member_email and invite boolean"
   default     = []
 }
