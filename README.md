@@ -1,6 +1,19 @@
 <!-- vim: set ft=markdown: -->
 # terraform-aws-guardduty
 
+#### Table of contents
+
+1. [Overview](#overview)
+2. [AWS GuardDuty - Overview Diagram](#aws-guardduty---overview-diagram)
+3. [AWS GuardDuty Terraform](#aws-guardduty-terraform)
+    * [Resources docs](#resources-docs)
+    * [Inputs](#inputs)
+    * [Outputs](#outputs)
+    * [Examples](#examples)
+        - [GuardDuty Master](#guardduty-master)
+        - [GuardDuty Member](#guardduty-member)
+    * [License](#license)
+
 ## Overview
 
 Amazon GuardDuty is a continuous security monitoring service that analyzes and processes the following data sources: VPC Flow Logs, AWS CloudTrail event logs, and DNS logs. It uses threat intelligence feeds, such as lists of malicious IPs and domains, and machine learning to identify unexpected and potentially unauthorized and malicious activity within your AWS environment.
