@@ -42,7 +42,7 @@ variable "ipset_format" {
 
 variable "ipset_iplist" {
   type        = list
-  description = "TODO"
+  description = "IPSet list of trusted IP addresses"
   default     = []
 }
 
@@ -60,7 +60,7 @@ variable "threatintelset_format" {
 
 variable "threatintelset_iplist" {
   type        = list
-  description = "TODO"
+  description = "ThreatIntelSet list of known malicious IP addresses"
   default     = []
 }
 
