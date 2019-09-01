@@ -18,6 +18,7 @@ File.readlines(file).each do |line|
 
   if line =~ /default/
     data[:default] = line.split('=')[1].gsub(/"/,'').gsub(/^ +/,'').chomp
+    data[:default] = '""' if data[:default].empty?
   end
 
   if line =~ /^}/
