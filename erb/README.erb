@@ -39,8 +39,27 @@ The below outlines the current parameters and defaults.
 
 |Name|Description|
 |------------|---------------------|
-| detector_id | The ID of the GuardDuty ThreatIntelSet and the detector ID |
+<%= %x{ruby erb/outputs2md.rb outputs.tf} -%>
 
 ### Examples
 
-TODO.
+#### GuardDuty Master
+
+A GuardDuty instance configured as a Master that invites a list of members:
+
+```tf
+<% remote = %x{git remote -v}.split("\n")[0].split[1] -%>
+<%= %x{sed 's!source.*!source = "#{remote}"!' examples/master_invite/main.tf} -%>
+```
+
+#### GuardDuty Member
+
+Then a GuardDuty Member account can accept the invitation from the Master account using:
+
+```tf
+<%= %x{sed 's!source.*!source = "#{remote}"!' examples/member_accept/main.tf} -%>
+```
+
+### License
+
+Apache 2.0.

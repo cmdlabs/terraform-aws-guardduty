@@ -58,13 +58,68 @@ The below outlines the current parameters and defaults.
 |master_account_id|Account ID for Guard Duty Master. Required if is_guardduty_member|string||Yes|
 |member_list|The list of member accounts to be added. Each member list need to have values of account_id, member_email and invite boolean|object|[]|No|
 
-
 ### Outputs
 
 |Name|Description|
 |------------|---------------------|
-| detector_id | The ID of the GuardDuty ThreatIntelSet and the detector ID |
+|detector_id|The ID of the GuardDuty detector|
+|account_id|The AWS account ID of the GuardDuty detector|
 
 ### Examples
 
-TODO.
+#### GuardDuty Master
+
+A GuardDuty instance configured as a Master that invites a list of members:
+
+```tf
+variable "account_id" {}
+variable "member_email" {}
+
+module "guardduty" {
+  source = "git@github.com:cmdlabs/terraform-aws-guardduty.git"
+
+  detector_enable = true
+  is_guardduty_master = true
+  has_ipset = true
+  has_threatintelset = true
+
+  ipset_activate = true
+  ipset_format = "TXT"
+  ipset_iplist = [
+    "1.1.1.1",
+    "2.2.2.2",
+  ]
+
+  threatintelset_activate = true
+  threatintelset_format = "TXT"
+  threatintelset_iplist = [
+    "3.3.3.3",
+    "4.4.4.4",
+  ]
+
+  member_list = [{
+    account_id   = var.account_id
+    member_email = var.member_email
+    invite       = true
+  }]
+}
+```
+
+#### GuardDuty Member
+
+Then a GuardDuty Member account can accept the invitation from the Master account using:
+
+```tf
+variable "master_account_id" {}
+
+module "guardduty" {
+  source = "git@github.com:cmdlabs/terraform-aws-guardduty.git"
+  detector_enable = true
+  is_guardduty_member = true
+  master_account_id = var.master_account_id
+}
+```
+
+### License
+
+Apache 2.0.
