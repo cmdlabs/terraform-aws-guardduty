@@ -105,6 +105,12 @@ module "guardduty" {
 }
 ```
 
+To apply that:
+
+```text
+▶ TF_VAR_member_account_id=xxxxxxxxxxxx TF_VAR_member_email=alex@somedomain.com terraform apply
+```
+
 #### GuardDuty Member
 
 Then a GuardDuty Member account can accept the invitation from the Master account using:
@@ -118,6 +124,12 @@ module "guardduty" {
   is_guardduty_member = true
   master_account_id = var.master_account_id
 }
+```
+
+To apply that:
+
+```text
+▶ TF_VAR_master_account_id=xxxxxxxxxxxx terraform apply
 ```
 
 ### License
