@@ -52,7 +52,7 @@ File.readlines('variables.tf').each do |line|
   if line =~ /default/
     default = line.split('=')[1].gsub(/"/,'').gsub(/^ +/,'').chomp
   end
-  if line =~ /}/
+  if line =~ /^}/
     required = default == '' ? 'Yes' : 'No'
     result += "|#{name}|#{description}|#{type}|#{default}|#{required}|\n"
   end
