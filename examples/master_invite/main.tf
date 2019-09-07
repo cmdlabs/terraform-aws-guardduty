@@ -1,4 +1,4 @@
-variable "account_id" {}
+variable "member_account_id" {}
 variable "member_email" {}
 
 module "guardduty" {
@@ -24,7 +24,7 @@ module "guardduty" {
   ]
 
   member_list = [{
-    account_id   = var.account_id
+    account_id   = var.member_account_id
     member_email = var.member_email
     invite       = true
   }]
