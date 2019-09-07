@@ -9,7 +9,7 @@ usage() {
   exit 1
 }
 
-fail() {
+err() {
   echo "ERROR: $*" ; exit 1
 }
 
@@ -24,7 +24,7 @@ vars=(
 )
 
 for tf_var in "${vars[@]}" ; do
-  code='[ -z $'"$tf_var"' ] && fail "'"$tf_var"' not set"'
+  code='[ -z $'"$tf_var"' ] && err "'"$tf_var"' not set"'
   eval "$code"
 done
 
@@ -35,7 +35,7 @@ bins=(
 
 for bin in "${bins[@]}" ; do
   code='if ! command -v '"$bin"' > /dev/null ; then
-          fail "'"$bin"' not found in $PATH"
+          err "'"$bin"' not found in $PATH"
         fi'
   eval "$code"
 done
