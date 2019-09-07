@@ -14,6 +14,10 @@ fail() {
 }
 
 vars=(
+  MASTER_AWS_ACCESS_KEY_ID
+  MASTER_AWS_SECRET_ACCESS_KEY
+  MEMBER_AWS_ACCESS_KEY_ID
+  MEMBER_AWS_SECRET_ACCESS_KEY
   TF_VAR_master_account_id
   TF_VAR_member_account_id
   TF_VAR_member_email
@@ -37,42 +41,81 @@ for bin in "${bins[@]}" ; do
   eval "$code"
 done
 
-tearDown() {
-  rm -f invitations.json
+switchAccount() {
+  local role="$1"
+  eval 'export AWS_ACCESS_KEY_ID="$'"$role"'_AWS_ACCESS_KEY_ID"'
+  eval 'export AWS_SECRET_ACCESS_KEY="$'"$role"'_AWS_SECRET_ACCESS_KEY"'
 }
 
 testMasterInvite() {
+  switchAccount 'MASTER'
+
   cd master_invite
 
-  terraform apply -auto-approve ; rc="$?"
-  assertTrue "terraform did not apply" "$rc"
+  if ! terraform apply -auto-approve ; then
+    fail "terraform did not apply"
+    startSkipping
+  fi
 
-  aws guardduty list-invitations > invitations.json
+  cd ..
+}
 
-  read -r relationship_status account_id <<< $(jq -r '.Invitations[] |
-    [.RelationshipStatus, .AccountId] | join(" ")' invitations.json)
+testDetectorId() {
+  switchAccount 'MASTER'
 
-  assertEquals "unexpected RelationshipStatus in invitation" "$relationship_status" "Invited"
-  assertEquals "unexpected AccountId in invitation" "$account_id" "$TF_VAR_master_account_id"
+  detector_id=$(aws guardduty list-detectors --query 'DetectorIds[0]' --output text)
+  assertTrue "32 char detector ID string not found" "grep -qE '.{32}' <<< $detector_id"
+}
 
-  cd - > /dev/null
+testInvitationIsSeen() {
+  switchAccount 'MEMBER'
+
+  read -r relationship_status account_id <<< $(
+    aws guardduty list-invitations \
+      --query 'Invitations[0].[RelationshipStatus, AccountId]' --output text
+  )
+
+  assertEquals "unexpected RelationshipStatus in invitation" \
+    "Invited" "$relationship_status"
+
+  assertEquals "did not see Master AccountId in invitation" \
+    "$TF_VAR_master_account_id" "$account_id"
 }
 
 testMemberAccept() {
+  switchAccount 'MEMBER'
+
   cd member_accept
 
-  terraform apply -auto-approve ; rc="$?"
-  assertTrue "terraform did not apply" "$rc"
+  if ! terraform apply -auto-approve ; then
+    fail "terraform did not apply"
+    startSkipping
+  fi
 
-  aws guardduty list-invitations > invitations.json
+  detector_id=$(aws guardduty list-detectors --query 'DetectorIds[0]' --output text)
+  assertTrue "32 char detector ID string not found" "grep -qE '.{32}' <<< $detector_id"
 
-  read -r relationship_status account_id <<< $(jq -r '.Invitations[] |
-    [.RelationshipStatus, .AccountId] | join(" ")' invitations.json)
+  cd ..
+}
 
-  assertEquals "unexpected RelationshipStatus in invitation" "$relationship_status" "Invited"
-  assertEquals "unexpected AccountId in invitation" "$account_id" "$TF_VAR_master_account_id"
+oneTimeTearDown() {
+  echo "tearing down ..."
 
-  cd - > /dev/null
+  switchAccount 'MEMBER'
+
+  cd member_accept
+  export AWS_ACCESS_KEY_ID="$MEMBER_AWS_ACCESS_KEY_ID"
+  export AWS_SECRET_ACCESS_KEY="$MEMBER_AWS_SECRET_ACCESS_KEY"
+  terraform destroy -auto-approve
+  cd ..
+
+  switchAccount 'MASTER'
+
+  cd master_invite
+  export AWS_ACCESS_KEY_ID="$MASTER_AWS_ACCESS_KEY_ID"
+  export AWS_SECRET_ACCESS_KEY="$MASTER_AWS_SECRET_ACCESS_KEY"
+  terraform destroy -auto-approve
+  cd ..
 }
 
 . shunit2
