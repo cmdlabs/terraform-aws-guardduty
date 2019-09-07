@@ -49,3 +49,13 @@ To tear both down:
 ▶ cd ../master_invite
 ▶ TF_VAR_member_account_id=xxxxxxxxxxxx TF_VAR_member_email=alex@somedomain.com terraform destroy
 ```
+
+## Automated tests
+
+### shunit2
+
+To run the automated tests using the shunit2 framework:
+
+```text
+▶ make shunit2
+```
