@@ -29,7 +29,6 @@ for tf_var in "${vars[@]}" ; do
 done
 
 bins=(
-  jq
   shunit2
   terraform
 )
