@@ -37,3 +37,8 @@ def test_threat_intel_set():
   assert threat_intel_set["Format"] == "TXT"
   assert threat_intel_set["Name"] == "ThreatIntelSet"
   assert "threatintelset.txt" in threat_intel_set["Location"]
+
+# FIXME. I can't get a pytest equivalent of oneTimeTearDown to work.
+def test_tear_down():
+  exit_status = terraform_destroy("./master_simple")
+  assert exit_status == 0

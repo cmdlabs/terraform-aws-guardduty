@@ -13,5 +13,6 @@ def terraform_apply(directory):
 
 def terraform_destroy(directory):
   os.chdir(directory)
-  subprocess.run(["terraform", "destroy", "-auto-approve"])
+  response = subprocess.run(["terraform", "destroy", "-auto-approve"])
   os.chdir("..")
+  return response.returncode
