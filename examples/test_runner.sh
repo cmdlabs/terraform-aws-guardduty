@@ -14,9 +14,9 @@ fail() {
 }
 
 vars=(
-  TF_VAR_account_id
-  TF_VAR_member_email
   TF_VAR_master_account_id
+  TF_VAR_member_account_id
+  TF_VAR_member_email
 )
 
 for tf_var in "${vars[@]}" ; do
