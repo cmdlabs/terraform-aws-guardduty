@@ -16,8 +16,11 @@ testMasterSimple() {
 }
 
 testDetectorId() {
-  detector_id=$(aws guardduty list-detectors --query 'DetectorIds[0]' --output text)
-  assertTrue "32 char detector ID string not found" "grep -qE '.{32}' <<< $detector_id"
+  detector_id=$(aws guardduty list-detectors \
+    --query 'DetectorIds[0]' --output text)
+
+  assertTrue "32 char detector ID string not found" \
+    "grep -qE '.{32}' <<< $detector_id"
 }
 
 testIpSet() {
@@ -25,14 +28,15 @@ testIpSet() {
     --detector-id "$detector_id" --query 'IpSetIds[0]' --output text)
 
   read -r status format name location <<< $(
-    aws guardduty get-ip-set --detector-id "$detector_id" --ip-set-id "$ip_set_id" \
-      --query '[Status, Format, Name, Location]' --output text
+    aws guardduty get-ip-set --detector-id "$detector_id" --ip-set-id \
+      "$ip_set_id" --query '[Status, Format, Name, Location]' --output text
   )
 
   assertEquals "Unexpected IPSet status" "ACTIVE" "$status"
   assertEquals "Unexpected IPSet format" "TXT" "$format"
-  assertEquals "Unexpected IPSet Name" "IPSet" "$name"
-  assertTrue "Unexpected IPSet Location" "grep -q 'ipset.txt' <<< $location"
+  assertEquals "Unexpected IPSet Name"   "IPSet" "$name"
+  assertTrue   "Unexpected IPSet Location" \
+    "grep -q 'ipset.txt' <<< $location"
 }
 
 testThreatIntelSet() {
@@ -40,14 +44,15 @@ testThreatIntelSet() {
     --detector-id "$detector_id" --query 'ThreatIntelSetIds[0]' --output text)
 
   read -r status format name location <<< $(
-    aws guardduty get-threat-intel-set --detector-id "$detector_id" --threat-intel-set-id "$threat_intel_set_id" \
-      --query '[Status, Format, Name, Location]' --output text
+    aws guardduty get-threat-intel-set --detector-id "$detector_id" --threat-intel-set-id \
+      "$threat_intel_set_id" --query '[Status, Format, Name, Location]' --output text
   )
 
   assertEquals "Unexpected ThreatIntelSet status" "ACTIVE" "$status"
   assertEquals "Unexpected ThreatIntelSet format" "TXT" "$format"
-  assertEquals "Unexpected ThreatIntelSet Name" "ThreatIntelSet" "$name"
-  assertTrue "Unexpected ThreatIntelSet Location" "grep -q 'threatintelset.txt' <<< $location"
+  assertEquals "Unexpected ThreatIntelSet Name"   "ThreatIntelSet" "$name"
+  assertTrue   "Unexpected ThreatIntelSet Location" \
+    "grep -q 'threatintelset.txt' <<< $location"
 }
 
 oneTimeTearDown() {

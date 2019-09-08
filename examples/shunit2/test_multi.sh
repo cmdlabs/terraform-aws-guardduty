@@ -18,16 +18,19 @@ testMasterInvite() {
 testDetectorId() {
   switchAccount 'MASTER'
 
-  detector_id=$(aws guardduty list-detectors --query 'DetectorIds[0]' --output text)
-  assertTrue "32 char detector ID string not found" "grep -qE '.{32}' <<< $detector_id"
+  detector_id=$(aws guardduty list-detectors \
+    --query 'DetectorIds[0]' --output text)
+
+  assertTrue "32 char detector ID string not found" \
+    "grep -qE '.{32}' <<< $detector_id"
 }
 
 testInvitationIsSeen() {
   switchAccount 'MEMBER'
 
   read -r relationship_status account_id <<< $(
-    aws guardduty list-invitations \
-      --query 'Invitations[0].[RelationshipStatus, AccountId]' --output text
+    aws guardduty list-invitations --query \
+      'Invitations[0].[RelationshipStatus, AccountId]' --output text
   )
 
   assertEquals "unexpected RelationshipStatus in invitation" \
@@ -47,28 +50,25 @@ testMemberAccept() {
     startSkipping
   fi
 
-  detector_id=$(aws guardduty list-detectors --query 'DetectorIds[0]' --output text)
-  assertTrue "32 char detector ID string not found" "grep -qE '.{32}' <<< $detector_id"
+  detector_id=$(aws guardduty list-detectors \
+    --query 'DetectorIds[0]' --output text)
+
+  assertTrue "32 char detector ID string not found" \
+    "grep -qE '.{32}' <<< $detector_id"
 
   cd ..
 }
 
 oneTimeTearDown() {
-  echo "tearing down ..."
-
+  echo "tearing down member ..."
   switchAccount 'MEMBER'
-
   cd member_accept
-  export AWS_ACCESS_KEY_ID="$MEMBER_AWS_ACCESS_KEY_ID"
-  export AWS_SECRET_ACCESS_KEY="$MEMBER_AWS_SECRET_ACCESS_KEY"
   terraform destroy -auto-approve
   cd ..
 
+  echo "tearing down master ..."
   switchAccount 'MASTER'
-
   cd master_invite
-  export AWS_ACCESS_KEY_ID="$MASTER_AWS_ACCESS_KEY_ID"
-  export AWS_SECRET_ACCESS_KEY="$MASTER_AWS_SECRET_ACCESS_KEY"
   terraform destroy -auto-approve
   cd ..
 }
