@@ -22,7 +22,7 @@ def test_ip_set():
   )
   assert ip_set["Status"] == "ACTIVE"
   assert ip_set["Format"] == "TXT"
-  assert ip_set["Name"] == "IPSet"
+  assert ip_set["Name"]   == "IPSet"
   assert "ipset.txt" in ip_set["Location"]
 
 def test_threat_intel_set():
@@ -35,7 +35,7 @@ def test_threat_intel_set():
   )
   assert threat_intel_set["Status"] == "ACTIVE"
   assert threat_intel_set["Format"] == "TXT"
-  assert threat_intel_set["Name"] == "ThreatIntelSet"
+  assert threat_intel_set["Name"]   == "ThreatIntelSet"
   assert "threatintelset.txt" in threat_intel_set["Location"]
 
 # FIXME. I can't get a pytest equivalent of oneTimeTearDown to work.
