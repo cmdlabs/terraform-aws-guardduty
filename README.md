@@ -12,7 +12,7 @@
     * [Examples](#examples)
         - [GuardDuty Master](#guardduty-master)
         - [GuardDuty Member](#guardduty-member)
-    * [License](#license)
+4. [License](#license)
 
 ## Overview
 
@@ -72,7 +72,7 @@ The below outlines the current parameters and defaults.
 A GuardDuty instance configured as a Master that invites a list of members:
 
 ```tf
-variable "account_id" {}
+variable "member_account_id" {}
 variable "member_email" {}
 
 module "guardduty" {
@@ -98,7 +98,7 @@ module "guardduty" {
   ]
 
   member_list = [{
-    account_id   = var.account_id
+    account_id   = var.member_account_id
     member_email = var.member_email
     invite       = true
   }]
@@ -132,6 +132,6 @@ To apply that:
 ▶ TF_VAR_master_account_id=xxxxxxxxxxxx terraform apply
 ```
 
-### License
+## License
 
 Apache 2.0.
