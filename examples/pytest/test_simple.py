@@ -9,7 +9,8 @@ def test_master_simple():
   assert exit_status == 0
 
 def test_detector_id():
-  detector_id = boto3.client("guardduty").list_detectors()["DetectorIds"][0]
+  client = boto3.client("guardduty")
+  detector_id = client.list_detectors()["DetectorIds"][0]
   assert len(detector_id) == 32
 
 def test_ip_set():
