@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# shellcheck disable=SC1091,SC2164,SC2154
 
 . shunit2/test_helper.sh
 
@@ -27,10 +28,10 @@ testIpSet() {
   ip_set_id=$(aws guardduty list-ip-sets \
     --detector-id "$detector_id" --query 'IpSetIds[0]' --output text)
 
-  read -r status format name location <<< $(
+  read -r status format name location <<< "$(
     aws guardduty get-ip-set --detector-id "$detector_id" --ip-set-id \
       "$ip_set_id" --query '[Status, Format, Name, Location]' --output text
-  )
+  )"
 
   assertEquals "Unexpected IPSet status" "ACTIVE" "$status"
   assertEquals "Unexpected IPSet format" "TXT" "$format"
@@ -43,10 +44,10 @@ testThreatIntelSet() {
   threat_intel_set_id=$(aws guardduty list-threat-intel-sets \
     --detector-id "$detector_id" --query 'ThreatIntelSetIds[0]' --output text)
 
-  read -r status format name location <<< $(
+  read -r status format name location <<< "$(
     aws guardduty get-threat-intel-set --detector-id "$detector_id" --threat-intel-set-id \
       "$threat_intel_set_id" --query '[Status, Format, Name, Location]' --output text
-  )
+  )"
 
   assertEquals "Unexpected ThreatIntelSet status" "ACTIVE" "$status"
   assertEquals "Unexpected ThreatIntelSet format" "TXT" "$format"

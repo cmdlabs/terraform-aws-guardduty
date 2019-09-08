@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# shellcheck disable=SC1091,SC2164,SC2154
 
 . shunit2/test_helper.sh
 
@@ -28,10 +29,10 @@ testDetectorId() {
 testInvitationIsSeen() {
   switchAccount 'MEMBER'
 
-  read -r relationship_status account_id <<< $(
+  read -r relationship_status account_id <<< "$(
     aws guardduty list-invitations --query \
       'Invitations[0].[RelationshipStatus, AccountId]' --output text
-  )
+  )"
 
   assertEquals "unexpected RelationshipStatus in invitation" \
     "Invited" "$relationship_status"
