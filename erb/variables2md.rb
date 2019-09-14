@@ -5,7 +5,7 @@ file = ARGV[0] ; result = '' ; data = {}
 File.readlines(file).each do |line|
   if line =~ /variable/
     name = line.split('"')[1]
-    data = {:name=>name}
+    data = {:name=>name, :default=>'""'}
   end
 
   if line =~ /type/
