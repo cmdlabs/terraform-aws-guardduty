@@ -3,20 +3,20 @@
 file = ARGV[0] ; result = '' ; data = {}
 
 File.readlines(file).each do |line|
-  if line =~ /variable/
+  if line =~ /^variable/
     name = line.split('"')[1]
     data = {:name=>name, :default=>'""'}
   end
 
-  if line =~ /type/
+  if line =~ /^ +type/
     data[:type] = line =~ /object/ ? 'object' : line.split(' ')[2]
   end
 
-  if line =~ /description/
+  if line =~ /^ +description/
     data[:description] = line.split('"')[1]
   end
 
-  if line =~ /default/
+  if line =~ /^ +default/
     data[:default] = line.split('=')[1].gsub(/"/,'').gsub(/^ +/,'').chomp
     data[:default] = '""' if data[:default].empty?
   end
