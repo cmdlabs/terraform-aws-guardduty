@@ -49,7 +49,7 @@ A GuardDuty instance configured as a Master that invites a list of members:
 
 ```tf
 <% remote = %x{git remote -v}.split("\n")[0].split[1] -%>
-<%= %x{sed 's!source.*!source = "#{remote}"!' examples/master_invite/main.tf} -%>
+<%= %x{sed -E 's!source( +)=.*!source\\1= "#{remote}"!' examples/master_invite/main.tf} -%>
 ```
 
 To apply that:
@@ -63,7 +63,7 @@ To apply that:
 Then a GuardDuty Member account can accept the invitation from the Master account using:
 
 ```tf
-<%= %x{sed 's!source.*!source = "#{remote}"!' examples/member_accept/main.tf} -%>
+<%= %x{sed -E 's!source( +)=.*!source\\1= "#{remote}"!' examples/member_accept/main.tf} -%>
 ```
 
 To apply that:
