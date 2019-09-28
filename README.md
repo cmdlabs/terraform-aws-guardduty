@@ -1,4 +1,6 @@
 <!-- vim: set ft=markdown: -->
+![CMD Solutions|medium](https://s3-ap-southeast-2.amazonaws.com/cmd-website-images/CMDlogo.jpg)
+
 # terraform-aws-guardduty
 
 #### Table of contents
