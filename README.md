@@ -20,7 +20,7 @@ Amazon GuardDuty is a continuous security monitoring service that analyses and p
 
 This repo contains Terraform modules for configuring AWS GuardDuty and managing IPSets and ThreadSets used by GuardDuty.
 
-Terraform >= 0.12 is required for this module.
+Terraform >= 0.12.0 is required for this module.
 
 ## AWS GuardDuty - Overview Diagram
 
