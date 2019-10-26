@@ -3,6 +3,23 @@
 
 . shunit2/test_helper.sh
 
+vars=(
+  MASTER_AWS_ACCESS_KEY_ID
+  MASTER_AWS_SECRET_ACCESS_KEY
+  MEMBER_AWS_ACCESS_KEY_ID
+  MEMBER_AWS_SECRET_ACCESS_KEY
+  TF_VAR_master_account_id
+  TF_VAR_member_account_id
+  TF_VAR_member_email
+)
+validateVars
+
+switchAccount() {
+  local role="$1" # MASTER or MEMBER.
+  eval 'export AWS_ACCESS_KEY_ID="$'"$role"'_AWS_ACCESS_KEY_ID"'
+  eval 'export AWS_SECRET_ACCESS_KEY="$'"$role"'_AWS_SECRET_ACCESS_KEY"'
+}
+
 testMasterInvite() {
   switchAccount 'MASTER'
 
