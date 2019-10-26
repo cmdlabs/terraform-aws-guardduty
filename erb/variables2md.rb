@@ -23,7 +23,7 @@ File.readlines(file).each do |line|
   end
 
   if line =~ /^}/
-    data[:required] = data[:default] == '' ? 'Yes' : 'No'
+    data[:required] = data[:default] == '""' ? 'Yes' : 'No'
     string = \
       "|" + data[:name] + \
       "|" + data[:description] + \
