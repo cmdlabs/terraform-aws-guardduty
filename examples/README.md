@@ -52,20 +52,8 @@ To tear both down:
 
 ## Automated tests
 
-As a proof of concept we have several versions of the automated tests.
-
-### Bash + shunit2 + AWS CLI
-
 To run the automated tests using the shunit2 framework:
 
 ```text
 ▶ make shunit2
-```
-
-### Python + PyTest + Boto3
-
-To run the automated tests using the PyTest framework:
-
-```text
-▶ make pytest
 ```

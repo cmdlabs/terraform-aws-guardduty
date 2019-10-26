@@ -12,7 +12,3 @@ shunit2:  ## Run the shunit2 tests
 		printf "\n%s:\n" $$i ; \
 		bash $$i || exit ; \
 		done
-
-pytest:  ## Run the pytest tests
-	. pytest/venv.sh ; \
-		py.test -W ignore::DeprecationWarning -sv
