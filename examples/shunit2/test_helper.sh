@@ -12,9 +12,9 @@
 usage() {
   printf "Usage: "
   for tf_var in "${vars[@]}" ; do
-    printf "$tf_var=... "
+    printf "%s=..." "$tf_var"
   done
-  printf "%s\n" "$0"
+  printf "%s\\n" "$0"
   exit 1
 }
 
