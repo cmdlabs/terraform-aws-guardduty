@@ -25,12 +25,11 @@ oneTimeSetUp() {
 }
 
 testMasterSimple() {
-  cd master_simple
+  (cd master_simple
   if ! terraform apply -auto-approve ; then
     fail "terraform did not apply"
     startSkipping
-  fi
-  cd ..
+  fi)
 }
 
 testDetectorId() {
@@ -75,9 +74,8 @@ testThreatIntelSet() {
 
 oneTimeTearDown() {
   echo "tearing down ..."
-  cd master_simple
-  terraform destroy -auto-approve
-  cd ..
+  (cd master_simple
+  terraform destroy -auto-approve)
 }
 
 . shunit2

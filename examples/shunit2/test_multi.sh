@@ -23,14 +23,12 @@ switchAccount() {
 testMasterInvite() {
   switchAccount 'MASTER'
 
-  cd master_invite
+  (cd master_invite
 
   if ! terraform apply -auto-approve ; then
     fail "terraform did not apply"
     startSkipping
-  fi
-
-  cd ..
+  fi)
 }
 
 testDetectorId() {
@@ -61,7 +59,7 @@ testInvitationIsSeen() {
 testMemberAccept() {
   switchAccount 'MEMBER'
 
-  cd member_accept
+  (cd member_accept
 
   if ! terraform apply -auto-approve ; then
     fail "terraform did not apply"
@@ -72,23 +70,19 @@ testMemberAccept() {
     --query 'DetectorIds[0]' --output text)
 
   assertTrue "32 char detector ID string not found" \
-    "grep -qE '.{32}' <<< $detector_id"
-
-  cd ..
+    "grep -qE '.{32}' <<< $detector_id")
 }
 
 oneTimeTearDown() {
   echo "tearing down member ..."
   switchAccount 'MEMBER'
-  cd member_accept
-  terraform destroy -auto-approve
-  cd ..
+  (cd member_accept
+  terraform destroy -auto-approve)
 
   echo "tearing down master ..."
   switchAccount 'MASTER'
-  cd master_invite
-  terraform destroy -auto-approve
-  cd ..
+  (cd master_invite
+  terraform destroy -auto-approve)
 }
 
 . shunit2
