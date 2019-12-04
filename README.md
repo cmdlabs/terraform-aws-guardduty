@@ -57,7 +57,7 @@ The below outlines the current parameters and defaults.
 |threatintelset_activate|Specifies whether GuardDuty is to start using the uploaded ThreatIntelSet|bool|true|No|
 |threatintelset_format|The format of the file that contains the ThreatIntelSet|string|TXT|No|
 |threatintelset_iplist|ThreatIntelSet list of known malicious IP addresses|list|[]|No|
-|master_account_id|Account ID for Guard Duty Master. Required if is_guardduty_member|string|""|No|
+|master_account_id|Account ID for Guard Duty Master. Required if is_guardduty_member|string|""|Yes|
 |member_list|The list of member accounts to be added. Each member list need to have values of account_id, member_email and invite boolean|object|[]|No|
 
 ### Outputs
