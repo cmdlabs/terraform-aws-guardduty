@@ -6,9 +6,9 @@ locals {
 }
 
 resource "aws_s3_bucket" "bucket" {
-  count         = var.is_guardduty_master && (var.has_ipset || var.has_threatintelset) ? 1 : 0
-  bucket_prefix = "guard-duty-bucket-"
-  acl           = "private"
+  count  = var.is_guardduty_master && (var.has_ipset || var.has_threatintelset) ? 1 : 0
+  bucket = "s3-audit-${var.client_name}-guardduty"
+  acl    = "private"
 }
 
 resource "aws_s3_bucket_object" "ipset" {

@@ -1,3 +1,7 @@
+variable "client_name" {
+  description = "Name of the organisation, used in the bucket name to ensure there are no conflicts"
+}
+
 variable "is_guardduty_master" {
   type        = bool
   description = "Whether the account is a master account"
