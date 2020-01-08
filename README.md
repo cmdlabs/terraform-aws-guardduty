@@ -46,6 +46,7 @@ The below outlines the current parameters and defaults.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-------:|:--------:|
+|client_name|Name of the client guard duty deploed to|string|""|Yes|
 |is_guardduty_master|Whether the account is a master account|bool|false|No|
 |is_guardduty_member|Whether the account is a member account|bool|false|No|
 |detector_enable|Enable monitoring and feedback reporting|bool|true|No|
