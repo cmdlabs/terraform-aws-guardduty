@@ -1,5 +1,7 @@
 variable "client_name" {
+  type        = string
   description = "Name of the organisation, used in the bucket name to ensure there are no conflicts"
+  default     = ""
 }
 
 variable "is_guardduty_master" {
