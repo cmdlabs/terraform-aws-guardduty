@@ -80,7 +80,8 @@ variable "member_email" {}
 
 module "guardduty" {
   source = "git@github.com:cmdlabs/terraform-aws-guardduty.git"
-
+  
+  client_name = "some_organisation"
   detector_enable = true
   is_guardduty_master = true
   has_ipset = true
