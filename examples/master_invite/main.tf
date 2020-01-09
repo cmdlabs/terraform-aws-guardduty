@@ -3,7 +3,8 @@ variable "member_email" {}
 
 module "guardduty" {
   source = "../../"
-
+  
+  client_name = "some_organisation"
   detector_enable = true
   is_guardduty_master = true
   has_ipset = true
