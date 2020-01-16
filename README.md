@@ -46,7 +46,7 @@ The below outlines the current parameters and defaults.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-------:|:--------:|
-|client_name|Name of the organisation, used in the bucket name to ensure there are no conflicts|string|""|Yes|
+|bucket_name|Name of the S3 bucket to use|string|""|Yes|
 |is_guardduty_master|Whether the account is a master account|bool|false|No|
 |is_guardduty_member|Whether the account is a member account|bool|false|No|
 |detector_enable|Enable monitoring and feedback reporting|bool|true|No|
@@ -81,7 +81,8 @@ variable "member_email" {}
 module "guardduty" {
   source = "git@github.com:cmdlabs/terraform-aws-guardduty.git"
   
-  client_name = "some_organisation"
+  bucket_name = "s3-audit-someclient-guardduty"
+
   detector_enable = true
   is_guardduty_master = true
   has_ipset = true

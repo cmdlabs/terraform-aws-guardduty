@@ -1,4 +1,5 @@
 .PHONY: shunit2 pytest
+
 .DEFAULT_GOAL := shunit2
 
 help:  ## Display this help

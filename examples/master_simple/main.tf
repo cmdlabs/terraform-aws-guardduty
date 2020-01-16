@@ -1,7 +1,8 @@
 module "guardduty" {
   source = "../../"
   
-  client_name = "some_organisation"
+  bucket_name = "s3-audit-someclient-guardduty"
+
   detector_enable = true
   is_guardduty_master = true
   has_ipset = true

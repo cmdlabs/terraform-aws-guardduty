@@ -7,7 +7,7 @@ locals {
 
 resource "aws_s3_bucket" "bucket" {
   count  = var.is_guardduty_master && (var.has_ipset || var.has_threatintelset) ? 1 : 0
-  bucket = "s3-audit-${var.client_name}-guardduty"
+  bucket = var.bucket_name
   acl    = "private"
 }
 

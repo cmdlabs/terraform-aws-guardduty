@@ -1,6 +1,6 @@
-variable "client_name" {
+variable "bucket_name" {
   type        = string
-  description = "Name of the organisation, used in the bucket name to ensure there are no conflicts"
+  description = "Name of the S3 bucket to use"
   default     = ""
 }
 
