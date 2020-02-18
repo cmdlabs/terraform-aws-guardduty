@@ -29,19 +29,8 @@ AWS GuardDuty automation includes use of the following core Terraform resources:
 - [`aws_guardduty_member`](https://www.terraform.io/docs/providers/aws/r/guardduty_member.html) - A resource to manage a GuardDuty member.
 - [`aws_guardduty_threatintelset`](https://www.terraform.io/docs/providers/aws/r/guardduty_threatintelset.html) - ThreatIntelSet is a list of known malicious IP addresses.
 
-### Inputs
-
-The below outlines the current parameters and defaults.
-
-| Name | Description | Type | Default | Required |
-|------|-------------|:----:|:-------:|:--------:|
-<%= %x{ruby erb/variables2md.rb variables.tf} -%>
-
-### Outputs
-
-|Name|Description|
-|------------|---------------------|
-<%= %x{ruby erb/outputs2md.rb outputs.tf} -%>
+<%# Call terraform-docs to generate inputs and outputs headers -%>
+<%= %x{terraform-docs md --no-providers . | sed 's/^##/###/'}.chomp -%>
 
 ### Examples
 
