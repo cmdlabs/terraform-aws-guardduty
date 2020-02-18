@@ -38,31 +38,145 @@ AWS GuardDuty automation includes use of the following core Terraform resources:
 - [`aws_guardduty_member`](https://www.terraform.io/docs/providers/aws/r/guardduty_member.html) - A resource to manage a GuardDuty member.
 - [`aws_guardduty_threatintelset`](https://www.terraform.io/docs/providers/aws/r/guardduty_threatintelset.html) - ThreatIntelSet is a list of known malicious IP addresses.
 
-### Inputs
+### Required Inputs
 
-| Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:-----:|
-| bucket\_name | Name of the S3 bucket to use | `string` | `""` | no |
-| detector\_enable | Enable monitoring and feedback reporting | `bool` | `true` | no |
-| has\_ipset | Whether to include IPSet | `bool` | `false` | no |
-| has\_threatintelset | Whether to include ThreatIntelSet | `bool` | `false` | no |
-| ipset\_activate | Specifies whether GuardDuty is to start using the uploaded IPSet | `bool` | `true` | no |
-| ipset\_format | The format of the file that contains the IPSet | `string` | `"TXT"` | no |
-| ipset\_iplist | IPSet list of trusted IP addresses | `list` | `[]` | no |
-| is\_guardduty\_master | Whether the account is a master account | `bool` | `false` | no |
-| is\_guardduty\_member | Whether the account is a member account | `bool` | `false` | no |
-| master\_account\_id | Account ID for Guard Duty Master. Required if is\_guardduty\_member | `string` | `""` | no |
-| member\_list | The list of member accounts to be added. Each member list need to have values of account\_id, member\_email and invite boolean | <pre>list(object({<br>    account_id   = string<br>    member_email = string<br>    invite       = bool<br>  }))</pre> | `[]` | no |
-| threatintelset\_activate | Specifies whether GuardDuty is to start using the uploaded ThreatIntelSet | `bool` | `true` | no |
-| threatintelset\_format | The format of the file that contains the ThreatIntelSet | `string` | `"TXT"` | no |
-| threatintelset\_iplist | ThreatIntelSet list of known malicious IP addresses | `list` | `[]` | no |
+No required input.
+
+### Optional Inputs
+
+The following input variables are optional (have default values):
+
+#### bucket\_name
+
+Description: Name of the S3 bucket to use
+
+Type: `string`
+
+Default: `""`
+
+#### detector\_enable
+
+Description: Enable monitoring and feedback reporting
+
+Type: `bool`
+
+Default: `true`
+
+#### has\_ipset
+
+Description: Whether to include IPSet
+
+Type: `bool`
+
+Default: `false`
+
+#### has\_threatintelset
+
+Description: Whether to include ThreatIntelSet
+
+Type: `bool`
+
+Default: `false`
+
+#### ipset\_activate
+
+Description: Specifies whether GuardDuty is to start using the uploaded IPSet
+
+Type: `bool`
+
+Default: `true`
+
+#### ipset\_format
+
+Description: The format of the file that contains the IPSet
+
+Type: `string`
+
+Default: `"TXT"`
+
+#### ipset\_iplist
+
+Description: IPSet list of trusted IP addresses
+
+Type: `list`
+
+Default: `[]`
+
+#### is\_guardduty\_master
+
+Description: Whether the account is a master account
+
+Type: `bool`
+
+Default: `false`
+
+#### is\_guardduty\_member
+
+Description: Whether the account is a member account
+
+Type: `bool`
+
+Default: `false`
+
+#### master\_account\_id
+
+Description: Account ID for Guard Duty Master. Required if is\_guardduty\_member
+
+Type: `string`
+
+Default: `""`
+
+#### member\_list
+
+Description: The list of member accounts to be added. Each member list need to have values of account\_id, member\_email and invite boolean
+
+Type:
+
+```hcl
+list(object({
+    account_id   = string
+    member_email = string
+    invite       = bool
+  }))
+```
+
+Default: `[]`
+
+#### threatintelset\_activate
+
+Description: Specifies whether GuardDuty is to start using the uploaded ThreatIntelSet
+
+Type: `bool`
+
+Default: `true`
+
+#### threatintelset\_format
+
+Description: The format of the file that contains the ThreatIntelSet
+
+Type: `string`
+
+Default: `"TXT"`
+
+#### threatintelset\_iplist
+
+Description: ThreatIntelSet list of known malicious IP addresses
+
+Type: `list`
+
+Default: `[]`
 
 ### Outputs
 
-| Name | Description |
-|------|-------------|
-| account\_id | The AWS account ID of the GuardDuty detector |
-| detector\_id | The ID of the GuardDuty detector |
+The following outputs are exported:
+
+#### account\_id
+
+Description: The AWS account ID of the GuardDuty detector
+
+#### detector\_id
+
+Description: The ID of the GuardDuty detector
 
 ### Examples
 
