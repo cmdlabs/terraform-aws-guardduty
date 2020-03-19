@@ -8,7 +8,7 @@ locals {
 resource "aws_s3_bucket" "bucket" {
   count  = var.is_guardduty_master && (var.has_ipset || var.has_threatintelset) ? 1 : 0
   bucket = var.bucket_name
-  force_destroy = true
+  force_destroy = var.force_destroy
   acl    = "private"
 }
 

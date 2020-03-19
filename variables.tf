@@ -4,6 +4,12 @@ variable "bucket_name" {
   default     = ""
 }
 
+variable "force_destroy" {
+  type        = bool
+  description = "(Optional) A boolean that indicates all objects should be deleted from the bucket so that the bucket can be destroyed without error. These objects are not recoverable."
+  default     = false
+}
+
 variable "is_guardduty_master" {
   type        = bool
   description = "Whether the account is a master account"
